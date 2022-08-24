@@ -11,14 +11,14 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     `./App.{js,ts,vue}`,
     `./app.{js,ts,vue}`,
-    // `./nuxt.config.js`,
-    // `./nuxt.config.ts`
+    `./form.theme.js`,
   ],
   theme: {
     extend: {
       colors: {
         primary: colors.violet,
         gray: colors.slate,
+        ...colors,
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],

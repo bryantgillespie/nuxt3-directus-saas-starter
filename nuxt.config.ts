@@ -11,6 +11,13 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
   ],
 
+  modules: ['@formkit/nuxt'],
+
+  meta: {
+    // Add inter var font
+    link: [{ rel: 'stylesheet', href: 'https://rsms.me/inter/inter.css' }],
+  },
+
   runtimeConfig: {
     public: {
       directusUrl: process.env.DIRECTUS_URL,
