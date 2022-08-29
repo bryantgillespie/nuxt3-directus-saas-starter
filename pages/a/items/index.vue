@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { readByQuery } = useItems()
+const { data, loading, error } = await readByQuery('app_items', {})
+</script>
 <template>
   <div>
     <PageHeader>
@@ -9,10 +13,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-const { readByQuery } = useItems()
-const { data, loading, error } = await readByQuery('app_items', {})
-</script>
-
-<style lang="scss" scoped></style>

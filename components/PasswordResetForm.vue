@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAuth } from '~~/store/auth'
+import { useUserStore } from '~~/store/user'
 const { $toast } = useNuxtApp()
 const auth = useAuth()
 

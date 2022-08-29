@@ -1,13 +1,13 @@
-import { stripe } from '~~/utils/stripe'
+import { stripe } from '~~/server/utils/stripe'
 
 export default defineEventHandler(async (event) => {
   const body = await useBody(event)
-  const { return_url } = body
+  const headers = getRequestHeaders(event)
 
   try {
     const { url } = await stripe.billingPortal.sessions.create({
-      customer: user.account.stripe_customer_id,
-      return_url,
+      customer: body.stripeCustomerId,
+      return_url: headers.referer,
     })
     return {
       url,

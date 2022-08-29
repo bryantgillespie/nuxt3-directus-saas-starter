@@ -1,10 +1,11 @@
-import { useAuth } from '~~/store/auth'
+import { useAppStore } from '~~/store/app'
 const msg =
   'You must be logged in to view this page. Redirecting back to to login.'
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  const user = useAuth()
-  if (!user.isLoggedIn) {
+  const appStore = useAppStore()
+
+  if (!appStore.authenticated) {
     return navigateTo('/signin')
   }
 })

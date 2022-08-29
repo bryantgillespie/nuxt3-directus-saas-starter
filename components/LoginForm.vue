@@ -6,13 +6,13 @@
     </div>
     <FormKit type="form" @submit="login" submit-label="Sign In">
       <FormKit
-        v-model="email"
+        v-model="credentials.email"
         type="email"
         label="Email"
         validation="required"
       />
       <FormKit
-        v-model="password"
+        v-model="credentials.password"
         type="password"
         label="Password"
         validation="required"
@@ -22,36 +22,24 @@
 </template>
 
 <script setup lang="ts">
-import { useAuth } from '~~/store/auth'
 const { $toast } = useNuxtApp()
 const auth = useAuth()
+const { loading, error } = auth
 
-const email = ref(null)
-const password = ref(null)
-
-const error = ref(null)
-const loading = ref(false)
+const credentials = reactive({
+  email: null,
+  password: null,
+})
 
 async function login() {
-  loading.value = true
-  error.value = null
-  try {
-    // Login
-    await auth.login({
-      email: email.value,
-      password: password.value,
-    })
-    // Show success toast
-    $toast.success('You have logged in.', {
-      timeout: 2000,
-    })
-    // Clear the form
-    email.value = ''
-    password.value = ''
-  } catch (e) {
-    error.value = e.message
-  } finally {
-    loading.value = false
-  }
+  // Login
+  await auth.login(credentials)
+  // Show success toast
+  $toast.success('You have logged in.', {
+    timeout: 2000,
+  })
+  // Clear the form
+  credentials.email = null
+  credentials.password = null
 }
 </script>

@@ -192,7 +192,7 @@ import {
   SupportIcon,
 } from '@heroicons/vue/outline'
 
-import { useAuth } from '~~/store/auth'
+import { useUserStore } from '~~/store/user'
 // import { useApp } from '~~/store/app'
 const route = useRoute()
 

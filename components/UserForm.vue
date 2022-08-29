@@ -61,7 +61,7 @@
   </form>
 </template>
 <script setup>
-import { useAuth } from '~~/store/auth'
+import { useUserStore } from '~~/store/user'
 const auth = useAuth()
 
 const props = defineProps({

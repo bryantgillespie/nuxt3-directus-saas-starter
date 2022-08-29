@@ -1,53 +1,61 @@
-import { ref, Ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useAuth } from './auth'
+import { merge } from 'lodash'
 
-interface Account {
-  isLoaded: Ref<boolean>
-  id: string
-  name: string
-  slug: string
-  status: string
-  date_created: string
-  date_updated: string
-  subscriptions: Array<object>
-}
+import { useUserStore } from './user'
+import { Account } from '~~/types/accounts'
 
-export const useAccount = defineStore('account', {
-  state: (): Account => ({
-    isLoaded: ref(false),
-    id: null,
-    name: '',
-    slug: '',
-    status: '',
-    date_created: '',
-    date_updated: '',
-    subscriptions: [],
+export const useAccountStore = defineStore('accountStore', {
+  state: () => ({
+    account: null as Account | null,
+    loading: false,
+    error: null,
   }),
 
   getters: {},
 
   actions: {
-    async getAccount() {
-      const auth = useAuth()
+    async hydrate() {
+      this.loading = true
+      console.log('hydrating accountStore')
+      const userStore = useUserStore()
       const { $directus } = useNuxtApp()
-      const user = auth.user
 
+      // Skip
+      if (!userStore.currentUser || !userStore.currentUser.account) {
+        this.loading = false
+        return
+      }
       try {
-        const account = await $directus
+        const response = await $directus
           .items('accounts')
-          .readOne(user.account, { fields: ['*'] })
-        console.log(account)
-        this.isLoaded = true
-        this.id = account.id
-        this.name = account.name
-        this.slug = account.slug
-        this.status = account.status
-        this.date_created = account.date_created
-        this.date_updated = account.date_updated
-        this.subscriptions = account.subscriptions
+          .readOne(userStore.currentUser.account, { fields: ['*'] })
+        console.log('hydrated account', response)
+        this.account = response
       } catch (e) {
         console.log(e)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async updateAccount(updates: { [key: string]: any }) {
+      const { $directus, $toast } = useNuxtApp()
+
+      const accountCopy = { ...this.currentUser }
+      const updatedAccount = merge({}, accountCopy, updates)
+
+      this.account = updatedAccount
+
+      try {
+        const response = await $directus
+          .items('accounts')
+          .updateOne(this.account.id, updatedAccount, { fields: ['*'] })
+
+        this.account = response
+
+        $toast.success('Account updated', { timeout: 3000 })
+      } catch (e) {
+        this.account = accountCopy
       }
     },
   },

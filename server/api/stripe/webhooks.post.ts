@@ -2,8 +2,8 @@ import {
   upsertProductRecord,
   upsertPriceRecord,
   manageSubscriptionStatusChange,
-} from '~~/utils/directus-admin'
-import { stripe } from '~~/utils/stripe'
+} from '~~/server/utils/directus-admin'
+import { stripe } from '~~/server/utils/stripe'
 
 const relevantEvents = [
   'product.created',
@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
     if (!sig || !webhookSecret) return
     const rawBody = await readRawBody(event)
     stripeEvent = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret)
+    console.log('Stripe webhook received:', stripeEvent.type)
   } catch (error) {
     createError(error)
   }

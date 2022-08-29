@@ -103,9 +103,9 @@
 </template>
 
 <script setup>
-import { useAuth } from '~~/store/auth'
+import { useUserStore } from '~~/store/user'
 const { $toast } = useNuxtApp()
-const auth = useAuth()
+const userStore = useUserStore()
 const account = reactive({
   name: null,
   contact: {

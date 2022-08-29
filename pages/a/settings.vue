@@ -1,3 +1,4 @@
+<script setup lang="ts"></script>
 <template>
   <div>
     <PageHeader>
@@ -9,5 +10,3 @@
     </div>
   </div>
 </template>
-
-<script setup></script>

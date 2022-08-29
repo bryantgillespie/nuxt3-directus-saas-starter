@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import { ChevronRightIcon } from '@heroicons/vue/outline'
+</script>
 <template>
   <div>
     <PageHeader>
@@ -19,9 +22,3 @@
     </PageHeader>
   </div>
 </template>
-
-<script setup>
-import { ChevronRightIcon } from '@heroicons/vue/outline'
-</script>
-
-<style lang="scss" scoped></style>

@@ -45,7 +45,7 @@
 
 <script setup>
 import { PencilIcon, TrashIcon } from '@heroicons/vue/outline'
-import { useAuth } from '~~/store/auth'
+import { useUserStore } from '~~/store/user'
 const auth = useAuth()
 
 const emit = defineEmits(['edit', 'delete'])

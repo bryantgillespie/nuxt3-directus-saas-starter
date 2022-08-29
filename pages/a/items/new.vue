@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { ChevronRightIcon } from '@heroicons/vue/outline'
+import { app_items } from '~~/utils/form-schemas'
+
+const { createOne } = useItems()
+
+const form = reactive({})
+
+async function saveItem() {
+  const { data } = await createOne('app_items', form)
+  console.log(data)
+}
+</script>
+
 <template>
   <div>
     <PageHeader>
@@ -22,17 +36,3 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import { ChevronRightIcon } from '@heroicons/vue/outline'
-import { app_items } from '~~/utils/form-schemas'
-
-const { createOne } = useItems()
-
-const form = reactive({})
-
-async function saveItem() {
-  const { data } = await createOne('app_items', form)
-  console.log(data)
-}
-</script>

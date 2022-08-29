@@ -1,7 +1,6 @@
 export default function useItems() {
   // Get API client
-  const directus = useDirectusClient()
-  //   const { $directus: directus } = useNuxtApp()
+  const { $directus } = useNuxtApp()
 
   // Loading and error state
   const loading = ref<boolean>(false)
@@ -17,7 +16,7 @@ export default function useItems() {
 
     loading.value = true
     try {
-      const response = await directus.items(collection).createOne(item, params)
+      const response = await $directus.items(collection).createOne(item, params)
       data.value = response
     } catch (e) {
       error.value = e
@@ -38,7 +37,7 @@ export default function useItems() {
 
     loading.value = true
     try {
-      const { data: response } = await directus
+      const { data: response } = await $directus
         .items(collection)
         .createMany(items, params)
       data.value = response
@@ -61,7 +60,7 @@ export default function useItems() {
 
     loading.value = true
     try {
-      const response = await directus.items(collection).readOne(id, params)
+      const response = await $directus.items(collection).readOne(id, params)
       data.value = response
     } catch (e) {
       error.value = e
@@ -78,7 +77,7 @@ export default function useItems() {
 
     loading.value = true
     try {
-      const { data: response } = await directus
+      const { data: response } = await $directus
         .items(collection)
         .readByQuery(params)
       data.value = response
@@ -104,7 +103,7 @@ export default function useItems() {
     const data = ref<object>({})
     loading.value = true
     try {
-      const response = await directus.items(collection).deleteOne(id)
+      const response = await $directus.items(collection).deleteOne(id)
       data.value = response
     } catch (e) {
       error.value = e
@@ -122,7 +121,7 @@ export default function useItems() {
     const data = ref<object>({})
     loading.value = true
     try {
-      const response = await directus.items(collection).deleteMany(ids)
+      const response = await $directus.items(collection).deleteMany(ids)
       data.value = response
     } catch (e) {
       error.value = e
