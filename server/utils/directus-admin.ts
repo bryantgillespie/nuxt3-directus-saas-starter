@@ -1,6 +1,6 @@
 import { Directus } from '@directus/sdk'
 import { toDateTime } from '~~/utils/time'
-import { stripe } from '~~/server/utils/stripe.js'
+import { stripe } from '~~/utils/stripe'
 import { Account } from '~~/types/accounts'
 
 const staticToken = process.env.DIRECTUS_ADMIN_TOKEN
@@ -11,10 +11,10 @@ const directusUrl = process.env.DIRECTUS_URL
 //   Create a new instance of the SDK
 const directusAdmin = new Directus(directusUrl, {
   storage: {
-    // prefix: 'server',
+    prefix: 'server',
   },
   auth: {
-    // mode: 'cookie',
+    mode: 'cookie',
     staticToken,
   },
 })
